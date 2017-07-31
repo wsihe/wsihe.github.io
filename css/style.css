@@ -521,9 +521,7 @@ pre .xml .cdata {
 }
 .blog-info h1 {
   margin: -60px 0 0 80px;
-  font-size: 22px;
-  font-family: calligraffittiregular, sans-serif;
-  text-shadow: 1px 1px 4px #aaa;
+  font-size: 18px;
 }
 .blog-info div.slogan {
   margin-left: 80px;
@@ -623,7 +621,7 @@ div.home h1 {
   width: 200px;
   margin: 30px auto 0;
   font-size: 1.5em;
-  background-image: -webkit-linear-gradient(0deg, #4b5cc4, #801dae, #edd1d8);
+  background-image: -webkit-linear-gradient(0deg, #76d0a3, #76d0a3, #00a854);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -631,35 +629,34 @@ div.home h1 {
   position: absolute;
   letter-spacing: 0.5px;
 }
-.excerpts > li {
-  padding: 60px 0;
+.excerpts li {
+  padding: 50px 0;
   border-bottom: 1px solid #eee;
 }
-.excerpts > li > .article-meta {
-  text-align: center;
+.excerpts li .article-meta .article-meta__title {
+  float: left;
+  color: #888;
+  font-size: 14px;
 }
-.excerpts > li > .article-meta a {
+.excerpts li .article-meta a {
   display: block;
-  margin: 10px 0;
+  margin: 10px 0 0 110px;
   color: #666;
   font-size: 22px;
   transition: all 0.4s;
 }
-.excerpts > li > .article-meta a:hover {
+.excerpts li .article-meta a:hover {
   color: #41b883;
 }
-.excerpts > li > .article-meta > time,
-.excerpts > li > .article-meta > i {
-  color: #888;
-  font-size: 14px;
-}
-.excerpts > li .post.post-excerpt {
+.excerpts li .post.post-excerpt {
+  margin-left: 110px;
   color: #666;
 }
-.excerpts > li .post.post-excerpt a {
+.excerpts li .post.post-excerpt a {
   color: #41b883;
 }
-.excerpts > li .read-more {
+.excerpts li .read-more {
+  margin-left: 110px;
   color: #41b883;
 }
 .container {
