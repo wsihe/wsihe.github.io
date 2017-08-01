@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用(8)-组件通信</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用(8)-组件通信</h1><i class="icon-calendar"></i><span>2017.07.31</span></header><div class="content"><p>ypa框架中页面通过框架提供的几种方式实现页面间通信，其中事件广播：</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用（8）- 组件通信</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用（8）- 组件通信</h1><i class="icon-calendar"></i><span>2017.07.31</span></header><div class="content"><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化，这是官方的说明。<br>下面说下我个人的理解：<br><a id="more"></a></p>
+<p>首先在ypa框架中页面通过框架提供的几种方式实现页面间通信，其中事件广播：</p>
 <ul>
 <li>事件方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">* 发送全局事件, 页面自身不包括在监听者范围内</div><div class="line">* @param eventName 事件名称</div><div class="line">* @param data 事件参数</div><div class="line">*/</div><div class="line">send: function (eventName, data) &#123;</div><div class="line">&#125;</div><div class="line">/**</div><div class="line">* 注册监听全局广播事件，回调函数中的this指针是页面对象自己</div><div class="line">* @param eventName &#123;String&#125; 事件名称</div><div class="line">* @param callback &#123;Function&#125; 回调函数, callback(data, event), event包含sender, eventName等 更多信息</div><div class="line">*/</div><div class="line">register: function (eventName, callback) &#123;</div><div class="line">&#125;</div><div class="line">/**</div><div class="line">* 取消监听全局广播事件</div><div class="line">* @param eventName 事件名称</div><div class="line">* @param callback 事件回调函数</div><div class="line">*/</div><div class="line">unregister: function (eventName, callback) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
@@ -37,11 +38,11 @@
   port: '443',
   defaultAvatar: '/avatars/default-avatar.png',
   adminAvatar: '/avatars/admin-avatar.jpg',
-  identifier: "2017/07/31/Vue2-0多页签应用-8-组件通信/"
+  identifier: "2017/07/31/Vue2-8/"
 };
 window.disqus_config = function () {
-  this.page.url = "http://yoursite.com/2017/07/31/Vue2-0多页签应用-8-组件通信/";
-  this.page.identifier = "2017/07/31/Vue2-0多页签应用-8-组件通信/";
+  this.page.url = "http://yoursite.com/2017/07/31/Vue2-8/";
+  this.page.identifier = "2017/07/31/Vue2-8/";
 };
 window.onload = function () {
   var s = document.createElement('script');

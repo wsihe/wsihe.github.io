@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用(9)-页签管理</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用(9)-页签管理</h1><i class="icon-calendar"></i><span>2017.07.31</span></header><div class="content"><p><img src="https://static.oschina.net/uploads/img/201706/06143708_M9Vw.png" alt=""><br>页签管理器是整个框架的核心，结合前面用到的 vue-rotuer 和状态管理 vuex 来实现我们的其功能</p>
-<ul>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用（9）-页签管理</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用（9）-页签管理</h1><i class="icon-calendar"></i><span>2017.07.31</span></header><div class="content"><p>页签管理器是整个框架的核心，我们结合前面用到的 vue-rotuer 和状态管理 vuex 来实现其功能<br><a id="more"></a></p>
+<ol>
 <li>控制页面的生存周期</li>
 <li>页面的切换，状态的保存</li>
-</ul>
+</ol>
+<p><img src="https://static.oschina.net/uploads/img/201706/06143708_M9Vw.png" alt=""></p>
 <ol>
 <li><p>这里有个比较重要的就是用到了：keep-alive</p>
 <ul>
@@ -82,11 +83,11 @@ function cloneRoute (to, from) {
   port: '443',
   defaultAvatar: '/avatars/default-avatar.png',
   adminAvatar: '/avatars/admin-avatar.jpg',
-  identifier: "2017/07/31/Vue2-0多页签应用-9-页签管理/"
+  identifier: "2017/07/31/Vue2-9/"
 };
 window.disqus_config = function () {
-  this.page.url = "http://yoursite.com/2017/07/31/Vue2-0多页签应用-9-页签管理/";
-  this.page.identifier = "2017/07/31/Vue2-0多页签应用-9-页签管理/";
+  this.page.url = "http://yoursite.com/2017/07/31/Vue2-9/";
+  this.page.identifier = "2017/07/31/Vue2-9/";
 };
 window.onload = function () {
   var s = document.createElement('script');

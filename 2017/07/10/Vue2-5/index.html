@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用(5)-规范／扩展</title><meta name="keywords" content="Vue"><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用(5)-规范／扩展</h1><i class="icon-calendar"></i><span>2017.07.10</span></header><div class="content"><p>制定一些基本的规范，对后期的维护和理解很有帮助<br><a id="more"></a></p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用（5）- 规范／扩展</title><meta name="keywords" content="Vue"><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用（5）- 规范／扩展</h1><i class="icon-calendar"></i><span>2017.07.10</span></header><div class="content"><p>制定一些基本的规范，对后期的维护和理解很有帮助<br><a id="more"></a></p>
 <p>###css目录结构<br>       .<br>       ├── src<br>           ├── css<br>           │   ├── index.styl              # 引入所有的文件<br>           │   ├── reset.styl              # 初始化样式<br>           │   ├── define.styl             # 全局变量<br>           │   ├── common.styl             # 全局样式<br>           │   ├── mixins.styl             # 混入<br>           │   ├── icons.styl              # icons<br>           │   ├── table.styl              # table<br>           │   ├── button.styl             # button</p>
 <p>上面借鉴了Bootstrap的目录划分</p>
 <p>###css命名规范</p>
@@ -135,11 +135,11 @@ new Vue({
   port: '443',
   defaultAvatar: '/avatars/default-avatar.png',
   adminAvatar: '/avatars/admin-avatar.jpg',
-  identifier: "2017/07/10/Vue2-0多页签应用-5-规范／扩展/"
+  identifier: "2017/07/10/Vue2-5/"
 };
 window.disqus_config = function () {
-  this.page.url = "http://yoursite.com/2017/07/10/Vue2-0多页签应用-5-规范／扩展/";
-  this.page.identifier = "2017/07/10/Vue2-0多页签应用-5-规范／扩展/";
+  this.page.url = "http://yoursite.com/2017/07/10/Vue2-5/";
+  this.page.identifier = "2017/07/10/Vue2-5/";
 };
 window.onload = function () {
   var s = document.createElement('script');
