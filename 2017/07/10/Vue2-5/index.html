@@ -1,8 +1,17 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用（5）- 规范／扩展</title><meta name="keywords" content="Vue"><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用（5）- 规范／扩展</h1><i class="icon-calendar"></i><span>2017.07.10</span></header><div class="content"><p>制定一些基本的规范，对后期的维护和理解很有帮助<br><a id="more"></a></p>
-<p>###css目录结构<br>       .<br>       ├── src<br>           ├── css<br>           │   ├── index.styl              # 引入所有的文件<br>           │   ├── reset.styl              # 初始化样式<br>           │   ├── define.styl             # 全局变量<br>           │   ├── common.styl             # 全局样式<br>           │   ├── mixins.styl             # 混入<br>           │   ├── icons.styl              # icons<br>           │   ├── table.styl              # table<br>           │   ├── button.styl             # button</p>
-<p>上面借鉴了Bootstrap的目录划分</p>
-<p>###css命名规范</p>
-<p>用过 Element 会注意到其默认主题，CSS 命名采用的是 BEM 的风格</p>
+<h3 id="css目录结构"><a href="#css目录结构" class="headerlink" title="css目录结构"></a>css目录结构</h3><pre><code>.
+├── src
+    ├── css
+    │   ├── index.styl              # 引入所有的文件
+    │   ├── reset.styl              # 初始化样式
+    │   ├── define.styl             # 全局变量
+    │   ├── common.styl             # 全局样式
+    │   ├── mixins.styl             # 混入
+    │   ├── icons.styl              # icons
+    │   ├── table.styl              # table
+    │   ├── button.styl             # button
+</code></pre><p>上面借鉴了Bootstrap的目录划分</p>
+<h3 id="css命名规范"><a href="#css命名规范" class="headerlink" title="css命名规范"></a>css命名规范</h3><p>用过 Element 会注意到其默认主题，CSS 命名采用的是 BEM 的风格</p>
 <ul>
 <li>BEM（或BEM的变体）是一个非常强大命名约定，以至于让你的前端代码更容易阅读和理解，更容易协作，更容易控制，更加健壮和明确而且更加严密；</li>
 <li><p>个人推荐团队合作中在公共样式／公共组件上使用 BEM + 命名空间的风格，以提高代码的复用率，而项目的业务组件／私有样式，可以使用页面名-功能名这样的方式；</p>
