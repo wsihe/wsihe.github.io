@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>user-select介绍</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">user-select介绍</h1><i class="icon-calendar"></i><span>2017.07.01</span></header><div class="content"><p>最近在写pagination分页组件的时候，发现多次点击分页或者上下一页的时候，会出现全选文本的情况，早期user-select是被用来保护网站的内容，不被用户复制和转载来，能否用user-select来解决呢，先复习下user-select的用法<br> <a id="more"></a></p>
+<h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><pre><code> user-select: none;
+user-select: auto;
+user-select: text;
+user-select: contain;
+user-select: all;
+
+-moz-user-select: none;
+-moz-user-select: text;
+-moz-user-select: all;
+
+-webkit-user-select: none;
+-webkit-user-select: text;
+-webkit-user-select: all;
+
+-ms-user-select: none;
+-ms-user-select: text;
+-ms-user-select: element;
+</code></pre><p> 值(value):</p>
+<ul>
+<li>auto——默认值，用户可以选中元素中的内容</li>
+<li>none——用户不能选择元素中的任何内容</li>
+<li>text——用户可以选择元素中的文本</li>
+<li>element——文本可选，但仅限元素的边界内(只有IE和FF支持)</li>
+<li>all——在编辑器内，如果双击/上下文点击发生在子元素上，改值的最高级祖先元素将被选中。</li>
+<li><p>-moz-none——firefox私有，元素和子元素的文本将不可选，但是，子元素可以通过text重设回可选。</p>
+<pre><code>.gf-pager {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+</code></pre></li>
+</ul>
+<h3 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h3><ul>
+<li>IE6-9不支持该属性，但支持使用标签属性 onselectstart=”return false;” 来达到 user-select:none 的效果；Safari和Chrome也支持该标签属性；</li>
+<li>直到Opera12.5仍然不支持该属性，但和IE6-9一样，也支持使用私有的标签属性 unselectable=”on” 来达到 user-select:none 的效果；unselectable 的另一个值是 off；</li>
+<li><p>除Chrome和Safari外，在其它浏览器中，如果将文本设置为 -ms-user-select:none;，则用户将无法在该文本块中开始选择文本。不过，如果用户在页面的其他区域开始选择文本，则用户仍然可以继续选择将文本设置为 -ms-user-select:none; 的区域文本；</p>
+<pre><code>&lt;div class=&quot;gf-pager&quot; onselectstart=&quot;return false;&quot; unselectable=&quot;on&quot;&gt;分页组件text&lt;/div&gt;
+</code></pre></li>
+</ul>
+<h3 id="最终实现"><a href="#最终实现" class="headerlink" title="最终实现"></a>最终实现</h3><pre><code>&lt;div class=&quot;gf-pager&quot; onselectstart=&quot;return false;&quot; unselectable=&quot;on&quot;&gt;分页组件text&lt;/div&gt;
+
+.gf-pager {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+</code></pre></div></article><div id="disqus_thread"></div><div id="disqus_proxy_thread"></div><script>window.disqusProxy = {
+  username: 'ciqu',
+  server: 'disqus-proxy.ycwalker.com',
+  port: '443',
+  defaultAvatar: '/avatars/default-avatar.png',
+  adminAvatar: '/avatars/admin-avatar.jpg',
+  identifier: "2017/07/01/user-select/"
+};
+window.disqus_config = function () {
+  this.page.url = "http://yoursite.com/2017/07/01/user-select/";
+  this.page.identifier = "2017/07/01/user-select/";
+};
+window.onload = function () {
+  var s = document.createElement('script');
+  s.src = '/static/js/main.0d0338ae.js';
+  s.async = true;
+  document.body.appendChild(s);
+};</script><link rel="stylesheet" href="/static/css/main.0603c539.css"></div></body><script>var _hmt = _hmt || []
+;(function () {
+  var hm = document.createElement("script")
+  hm.src = "https://hm.baidu.com/hm.js?ad593ccdd2ffe5cf791b35fee21d343d"
+  var s = document.getElementsByTagName("script")[0]
+  s.parentNode.insertBefore(hm, s)
+})()</script></head></html>
