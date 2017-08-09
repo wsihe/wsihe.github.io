@@ -32,27 +32,4 @@
 <p>在action.js中,调用后台接口修改组合名称<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">async setPlanName (&#123;commit, state&#125;) &#123;</div><div class="line">   let planId = state.plan.planId</div><div class="line">   let name = state.plan.name</div><div class="line">   let res = await updatePlanName(planId,name)</div><div class="line">   // 修改成功，保存组合信息</div><div class="line">   commit(RETSET_NAME, res)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Vuex 支持在开发过程中热重载 mutation、modules、actions、和getters</p>
 <p><img src="https://static.oschina.net/uploads/img/201706/06151934_Axmg.png" alt=""></p>
-</div></article><div id="disqus_thread"></div><div id="disqus_proxy_thread"></div><script>window.disqusProxy = {
-  username: 'ciqu',
-  server: 'disqus-proxy.ycwalker.com',
-  port: '443',
-  defaultAvatar: '/avatars/default-avatar.png',
-  adminAvatar: '/avatars/admin-avatar.jpg',
-  identifier: "2017/05/31/Vue2-8/"
-};
-window.disqus_config = function () {
-  this.page.url = "http://yoursite.com/2017/05/31/Vue2-8/";
-  this.page.identifier = "2017/05/31/Vue2-8/";
-};
-window.onload = function () {
-  var s = document.createElement('script');
-  s.src = '/static/js/main.0d0338ae.js';
-  s.async = true;
-  document.body.appendChild(s);
-};</script><link rel="stylesheet" href="/static/css/main.0603c539.css"></div></body><script>var _hmt = _hmt || []
-;(function () {
-  var hm = document.createElement("script")
-  hm.src = "https://hm.baidu.com/hm.js?ad593ccdd2ffe5cf791b35fee21d343d"
-  var s = document.getElementsByTagName("script")[0]
-  s.parentNode.insertBefore(hm, s)
-})()</script></head></html>
+</div></article></div></body></head></html>
