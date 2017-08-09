@@ -13,19 +13,16 @@
 <p>主体框架搭好了，可以在主体框架上堆砌组件</p>
 <p>[1.main-nav] 顶部导航栏<br>[2.side-bar] 左边菜单栏<br>[3.main-tab] 页签管理器<br>[4.content]  变化的，通过动态的view加载不同的页面组件</p>
 <p>可以看出1.2.3都是一直显示在主体框架的，所以在index.vue直接引用，而页面组件通过 router-view 来动态加载</p>
-<p><img src="https://static.oschina.net/uploads/img/201706/06094742_FHOa.png" alt=""></p>
-<p>具体代码查看项目，就不一一贴出来了</p>
+<p>页面组件代码可以<a href="https://github.com/wsihe/vue-many" target="_blank" rel="external">查看项目</a>，就不一一贴出来了</p>
 <h3 id="3-路由和配置"><a href="#3-路由和配置" class="headerlink" title="3.路由和配置"></a>3.路由和配置</h3><p>接下来就是配置路由，将组件(components)映射到路由(routes)，然后告诉 vue-router 在哪里渲染它们。因为用到了懒加载，首先把路由对应的组件定义成异步组件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const Foo = resolve =&gt; require([&apos;./Foo.vue&apos;], resolve)</div></pre></td></tr></table></figure></p>
 <p>我们也可以把组件按块级来分配</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">const Foo = r =&gt; require.ensure([], () =&gt; r(require(&apos;./Foo.vue&apos;)), &apos;group-foo&apos;)</div><div class="line">const Bar = r =&gt; require.ensure([], () =&gt; r(require(&apos;./Bar.vue&apos;)), &apos;group-foo&apos;)</div></pre></td></tr></table></figure>
 <p>按主体框架来策划我们的组件：</p>
 <ul>
-<li>路由 /login       –&gt; 一级路由login.vue</li>
-<li>路由 /            –&gt; 一级路由index.vue</li>
-<li>路由 /assetView   –&gt; 二级路由assetView.vue，对应index.vue下的子路由</li>
-<li>路由 /customerInquire   –&gt; 二级路由customerInquire.vue，对应index.vue下的子路由</li>
-<li>路由 /potentialCustomer   –&gt; 二级路由potentialCustomer.vue，对应index.vue下的子路由</li>
+<li>路由 /login       -&gt; 一级路由login.vue</li>
+<li>路由 /            -&gt; 一级路由index.vue</li>
+<li>路由 /switchDemo   -&gt; 二级路由switchDemo.vue，对应index.vue下的子路由</li>
+<li>路由 /paginationDemo   -&gt; 二级路由paginationDemo.vue，对应index.vue下的子路由</li>
+<li>路由 /messageDemo   -&gt; 二级路由messageDemo.vue，对应index.vue下的子路由</li>
 </ul>
-<p><img src="https://static.oschina.net/uploads/img/201706/06132441_fB2d.png" alt=""></p>
-<p><img src="https://static.oschina.net/uploads/img/201706/06111934_OQSx.png" alt=""></p>
 </div></article></div></body></head></html>
