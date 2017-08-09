@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用（6）- 路由配置</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用（6）- 路由配置</h1><i class="icon-calendar"></i><span>2017.05.22</span></header><div class="content"><p>项目中使用 vue-router 管理各个组件的动态加载，把不同的路由划分成不同的代码块，只有当路由给访问到才去加载相应的组件。具体实现如下：<br><a id="more"></a></p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Vue2.0多页签应用 - 路由配置</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Vue2.0多页签应用 - 路由配置</h1><i class="icon-calendar"></i><span>2017.05.22</span></header><div class="content"><p>项目中使用 vue-router 管理各个组件的动态加载，把不同的路由划分成不同的代码块，只有当路由给访问到才去加载相应的组件。具体实现如下：<br><a id="more"></a></p>
 <h3 id="1-划分功能区域"><a href="#1-划分功能区域" class="headerlink" title="1.划分功能区域"></a>1.划分功能区域</h3><pre><code>├── 顶部导航栏 [1] — main-navbar
 ├── 左边菜单栏 [2] — main-sidebar
 ├── 内容区域       — main_content
@@ -24,5 +24,11 @@
 <li>路由 /switchDemo   -&gt; 二级路由switchDemo.vue，对应index.vue下的子路由</li>
 <li>路由 /paginationDemo   -&gt; 二级路由paginationDemo.vue，对应index.vue下的子路由</li>
 <li>路由 /messageDemo   -&gt; 二级路由messageDemo.vue，对应index.vue下的子路由</li>
+</ul>
+<h3 id="系列链接"><a href="#系列链接" class="headerlink" title="系列链接"></a>系列链接</h3><ul>
+<li><a href="/2017/05/27/Vue2-7/" title="Vue2.0多页签应用 - 登录配置">Vue2.0多页签应用 - 登录配置</a></li>
+<li><a href="/2017/05/31/Vue2-8/" title="Vue2.0多页签应用 - 组件通信">Vue2.0多页签应用 - 组件通信</a></li>
+<li><a href="/2017/06/03/Vue2-9/" title="Vue2.0多页签应用 - 页签管理">Vue2.0多页签应用 - 页签管理</a>
+</li>
 </ul>
 </div></article></div></body></head></html>
