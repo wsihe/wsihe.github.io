@@ -90,6 +90,7 @@ figure {
 hr {
   box-sizing: content-box;
   height: 0;
+  border: 1px solid #eee;
 }
 pre {
   overflow: auto;
@@ -751,7 +752,7 @@ article h3 {
 }
 article h2,
 article h3 {
-  margin: 6px 0;
+  margin: 24px 0;
 }
 article h4,
 article h5,
@@ -777,6 +778,9 @@ article time {
 article ol,
 article ul {
   padding-left: 30px;
+}
+article ol li {
+  padding: 0 0 15px;
 }
 article ul li {
   position: relative;
