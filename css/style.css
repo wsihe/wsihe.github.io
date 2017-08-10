@@ -521,7 +521,7 @@ pre .xml .cdata {
   box-shadow: 1px 2px 8px -2px #808080;
 }
 .blog-info h1 {
-  margin: -60px 0 0 80px;
+  margin: -50px 0 0 80px;
   font-size: 18px;
 }
 .blog-info div.slogan {
@@ -867,18 +867,17 @@ code {
   font-weight: normal;
 }
 .box .content .post-year {
-  font-size: 24px;
+  font-size: 22px;
 }
 .box .content .post-year,
 .box .content .post-category,
 .box .content .post-tag {
   position: relative;
-  font-family: 'calligraffittiregular', sans-serif;
   color: #555;
   height: 30px;
   line-height: 30px;
   margin: 30px 0 0 25px;
-  padding: 3px 30px;
+  padding: 3px 20px;
 }
 .box .content .post-year a,
 .box .content .post-category a,
@@ -887,7 +886,7 @@ code {
 .box .content .post-category span,
 .box .content .post-tag span {
   display: inline-block;
-  margin-right: 16px;
+  margin-right: 10px;
 }
 .box .content .post-year:before,
 .box .content .post-category:before,
