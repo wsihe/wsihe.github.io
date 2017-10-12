@@ -656,6 +656,9 @@ div.home h1 {
 .excerpts .excerpts-li .post.post-excerpt a {
   color: #41b883;
 }
+.excerpts .excerpts-li .post.post-excerpt p {
+  color: #999;
+}
 .excerpts .excerpts-li .read-more {
   margin-left: 110px;
   color: #41b883;
@@ -728,12 +731,15 @@ article header > span {
 article .content {
   width: 100%;
 }
-article h1,
-article h2,
 article h3 {
   margin: 24px 0;
   padding-left: 20px;
   border-left: 4px solid #41b883;
+}
+article h1,
+article h2 {
+  padding: 20px 0;
+  border-bottom: 1px solid #eaecef;
 }
 article h1,
 article h2,
