@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>常见的算法问题</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">常见的算法问题</h1><i class="icon-calendar"></i><span>2017.10.18</span></header><div class="content"><p>算法基础知识的积累，可以帮助我们更好的优化解决问题的思路。</p>
+<a id="more"></a>
+<h2 id="1-去掉一组整型数组重复的值"><a href="#1-去掉一组整型数组重复的值" class="headerlink" title="1.去掉一组整型数组重复的值"></a>1.去掉一组整型数组重复的值</h2><pre><code>var student = [‘qiang’,’ming’,’tao’,’li’,’liang’,’you’,’qiang’,’tao’];
+</code></pre><p>对Object的使用，利用key来进行筛选</p>
+<pre><code>let unique = function(arr) {
+    let hashTable = {};
+    let data = [];
+    for(let i=0,l=arr.length;i&lt;l;i++) {
+        if(!hashTable[arr[i]]) {
+            hashTable[arr[i]] = true;
+            data.push(arr[i]);
+        }
+    }
+    return data
+}
+module.exports = unique;
+</code></pre><h2 id="2-统计一个字符串出现最多的字母"><a href="#2-统计一个字符串出现最多的字母" class="headerlink" title="2.统计一个字符串出现最多的字母"></a>2.统计一个字符串出现最多的字母</h2><p>给出一段英文连续的英文字符窜，找出重复出现次数最多的字母</p>
+<pre><code>输入 ： afjghdfraaaasdenas
+ 输出 ： a
+</code></pre><p>前面出现过去重的算法，这里需要是统计重复次数。</p>
+<pre><code>function findMaxDuplicateChar(str) {
+    if(str.length == 1) {
+        return str;
+    }
+    let charObj = {};
+    for(let i=0;i&lt;str.length;i++) {
+        if(!charObj[str.charAt(i)]) {
+            charObj[str.charAt(i)] = 1;
+        }else{
+            charObj[str.charAt(i)] += 1;
+        }
+    }
+    let maxChar = &apos;&apos;,
+            maxValue = 1;
+    for(var k in charObj) {
+        if(charObj[k] &gt;= maxValue) {
+            maxChar = k;
+            maxValue = charObj[k];
+        }
+    }
+    return maxChar;
+}
+module.exports = findMaxDuplicateChar;
+</code></pre><h2 id="3-排序算法"><a href="#3-排序算法" class="headerlink" title="3.排序算法"></a>3.排序算法</h2><p>冒泡排序：</p>
+<pre><code>function bubbleSort(arr) {
+    for(let i = 0,l=arr.length;i&lt;l-1;i++) {
+        for(let j = i+1;j&lt;l;j++) {
+            if(arr[i]&gt;arr[j]) {
+                let tem = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = tem;
+                }
+            }
+    }
+    return arr;
+}
+module.exports = bubbleSort;
+</code></pre><p>快速排序：</p>
+<pre><code>function quickSort(arr) {
+    if(arr.length&lt;=1) {
+        return arr;
+    }
+    let leftArr = [];
+    let rightArr = [];
+    let q = arr[0];
+    for(let i = 1,l=arr.length; i&lt;l; i++) {
+        if(arr[i]&gt;q) {
+            rightArr.push(arr[i]);
+        }else{
+            leftArr.push(arr[i]);
+        }
+    }
+    return [].concat(quickSort(leftArr),[q],quickSort(rightArr));
+}
+module.exports = quickSort;
+</code></pre><p>参考：<a href="http://www.jackpu.com/qian-duan-mian-shi-zhong-de-chang-jian-de-suan-fa-wen-ti/" target="_blank" rel="external">JS常见的算法</a></p>
+</div></article></div></body></head></html>
