@@ -1,3 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>前端工程化实践</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">前端工程化实践</h1><i class="icon-calendar"></i><span>2017.10.01</span></header><div class="content"><p>在开发 Wuui 组件库时前端工程化的实践</p>
 <a id="more"></a>
-<h3 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h3><h3 id="规范-Git-工作"><a href="#规范-Git-工作" class="headerlink" title="规范 Git 工作"></a>规范 Git 工作</h3><h3 id="Airbnb-规范"><a href="#Airbnb-规范" class="headerlink" title="Airbnb 规范"></a>Airbnb 规范</h3><h3 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h3></div></article></div></body></head></html>
+<h3 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h3><ul>
+<li>页面上的每个 独立的 可视/可交互区域视为一个组件;</li>
+<li>每个组件对应一个工程目录，组件所需的各种资源都在这个目录下就近维护;</li>
+<li>每个组件相对独立，页面只不过是组件的容器，组件自由组合形成功能完整的界面;</li>
+<li>当不需要某个组件，或者想要替换组件时，可以整个目录删除/替换。</li>
+</ul>
+<h3 id="规范-Git-工作"><a href="#规范-Git-工作" class="headerlink" title="规范 Git 工作"></a>规范 Git 工作</h3><p>格式化的 Commit message，有很多个好处：</p>
+<ul>
+<li>提供更多的历史信息，方便代码 CodeReview。</li>
+<li>可以过滤不同类型的 Commit，方便快速查找信息。</li>
+<li>还可以由 Commit message 生成产品的 Changelog。</li>
+</ul>
+<p>Angular规范：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">feat：新功能（feature）</div><div class="line">fix：修补bug</div><div class="line">docs：文档（documentation）</div><div class="line">style： 格式（不影响代码运行的变动）</div><div class="line">refactor：重构（即不是新增功能，也不是修改bug的代码变动）</div><div class="line">test：增加测试</div><div class="line">chore：构建过程或辅助工具的变动</div></pre></td></tr></table></figure>
+<h3 id="Airbnb-规范"><a href="#Airbnb-规范" class="headerlink" title="Airbnb 规范"></a>Airbnb 规范</h3><p>Airbnb 的编码规范是在业界非常流行的一套规范，而且它一直都在进化，推出最新技术的规范，例如第一时间推出了ES6的规范，让人读了感觉受益匪浅。</p>
+<h3 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h3><p>使用Travis CI自动部署到 Github 上，Travis CI 是目前新兴的开源持续集成构建项目，它与jenkins，GO的很明显的特别在于采用yaml格式，同时他是在在线的服务，不像jenkins需要你本地打架服务器，简洁清新独树一帜。目前大多数的github项目都已经移入到Travis CI的构建队列中，据说Travis CI每天运行超过4000次完整构建。</p>
+</div></article></div></body></head></html>
