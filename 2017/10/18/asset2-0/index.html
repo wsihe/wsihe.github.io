@@ -1,1 +1,42 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>资产配置项目总结</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">资产配置项目总结</h1><i class="icon-calendar"></i><span>2017.10.18</span></header><div class="content"></div></article></div></body></head></html>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>资产配置项目总结</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">资产配置项目总结</h1><i class="icon-calendar"></i><span>2017.10.18</span></header><div class="content"><p>经过一年密集的开发，资产配置平台二期（下简称资配平台）将在10月份结项，在这里做个总结，单纯说下个人心得，不涉及具体实现（保密协议），类似的实现也可以参考我 Vue 全家桶实践项目 <a href="https://github.com/wsihe/vue-many" target="_blank" rel="external">vue-many</a>。</p>
+<h2 id="一期存在问题："><a href="#一期存在问题：" class="headerlink" title="一期存在问题："></a>一期存在问题：</h2><ul>
+<li>系统的交互流程复杂，以生成报告书为例，几乎所有流程集中在同一个页面，没有明显的流程次序区分，新用户难以上手。</li>
+<li>交互流程不够方便快捷，交互方式指引不够——操作指引不清晰，用户在进行功能操作时，会错过一些处理，造成结果与用户预期不同。</li>
+<li>界面设计较落后，老旧的系统样式—-为了后续能支持多终端，二期在界面设计上将以扁平化设计为主，多平台尽量保持一致。</li>
+<li>代码比较混乱，原平台开发代码的逻辑是个坑，且踩且珍惜。</li>
+</ul>
+<p>一期是以前的老项目，存在的问题比较多。</p>
+<h2 id="二期的优化："><a href="#二期的优化：" class="headerlink" title="二期的优化："></a>二期的优化：</h2><p>二期对整个项目进行了重构。</p>
+<h4 id="技术选型和方案"><a href="#技术选型和方案" class="headerlink" title="技术选型和方案"></a>技术选型和方案</h4><p>首先在前端框架选择上，团队成员接触的比较多的就是 Angular 1，它可以帮助我们快速进入开发，在代码的头一千行，我们会感到很有趣，但在那之后，代码开始变得糟糕起来，旧的Angular 1新来的开发人员甚至都不想去触碰一下，因为它们太难以管理了。</p>
+<p>所以我们选择了相对好上手的 Vue 作为底层框架，对于 Vue 的优势所在，可以关注 <a href="https://mp.weixin.qq.com/s?__biz=MzIwNjQwMzUwMQ==&amp;mid=2247484393&amp;idx=1&amp;sn=142b8e37dfc94de07be211607e468030&amp;chksm=9723612ba054e83db6622a891287af119bb63708f1b7a09aed9149d846c9428ad5abbb822294&amp;mpshare=1&amp;scene=23&amp;srcid=1117xibGjH860bGrbWS3TNT1#rd" target="_blank" rel="external">《Vue作者尤雨溪：Vue 2.0，渐进式前端解决方案》</a>。</p>
+<p>二期资配平台设计方案是类似浏览器端的多页签模式，页面交互过程一般会是：</p>
+<p>（1）进入主页A，显示主页A内容；<br>（2）用户点击某个按钮，跳转切换到页面B，显示页面B内容，当前页面A消失（被隐藏缓存起来）；<br>（3）用户按下A页面的页签，视图切换到主页A，主页A被恢复显示，当前页面B被（被隐藏缓存起来）。<br>（4）用户按下B页面页签关闭按钮，当前页面B被关闭销毁，视图切换到主页A，主页A被恢复显示。</p>
+<p>考虑到页签的实现，我们采用一套自定义的页面管理的方式+Vue作为底层框架的方案。</p>
+<p>对应上面流程，可以将页面状态划分为5个状态：</p>
+<ul>
+<li>init：页面刚初始化，获取到页面参数、选项等数据，但视图未初始化；</li>
+<li>created：页面已创建，视图、数据初始化完成， dom节点能获取到，但未添加到dom树中显示；</li>
+<li>resumed：页面视图当前可见，对应dom节点已附加到dom树上；</li>
+<li>paused：页面被暂停隐藏，视图不可见，dom节点从dom树卸载，缓存在内存中；</li>
+<li>destroyed：页面被销毁，各种资源被释放，dom节点数据从内存中清除。</li>
+</ul>
+<p>为了快速进行业务迭代，项目还引入了 Bootstrap 和 JQuery，后面可以用Grid栅格等组件来代替。</p>
+<h4 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h4><p>组件化开发是当前前端开发技术趋势，组件化的目标一是为了复用，二是为了分解降低复杂度。在我们的实际项目中，单个页面虽然不会像大型web系统那样复杂，而且使用了vue.js等mvvm框架来避免繁琐的dom操作，但随着功能的增加以及页面细节的优化，单个页面的js代码也轻易超过1千行，vm字段和方法动辄几十个，代码臃肿难以维护。此时，我们就需要适当地将页面内不同单元划分成不同组件来实现，分而自治。另外，当不同页面包含有相同UI、逻辑交互的单元时，也应考虑将该单元抽离出来，封装成独立的组件，以方便复用。</p>
+<p>团队缺少基础组件的沉淀，所以在开发公共的基础组件也比较关键。</p>
+<h4 id="页面间通信机制"><a href="#页面间通信机制" class="headerlink" title="页面间通信机制"></a>页面间通信机制</h4><p>每个页面各自负责自己的视图展现和业务逻辑，页面与页面之间相互独立，没有引用其他页面的实例对象，无法调用其他页面的具体方法。页面通过框架提供的几种方式实现页面间通信。</p>
+<p>1）params参数传递</p>
+<p> 页面A在跳转到页面B，将传递数据设置在goto()方法的params参数中，页面B在onCreate()方法中接收。</p>
+<p>2) 页面结果传值</p>
+<p>照前端的传统思路，一般在params请求参数中添加一个回调函数参数，但目标页面处理完结果后，调用触发该回调函数。这种方式的一个缺点是params无法支持回调函数的序列化，回调的时机不明确，比如源页面已被暂停显示。另外，也无法支持页面层级嵌套请求，比如页面A请求页面B，页面B再请求页面C，页面C处理完后返回结果给页面A，即页面A-&gt;页面B-&gt;页面C，页面C-&gt;&gt;页面A的交互流程。</p>
+<p>当前页面（即源页面）通过调用goForResult()方法来打开目标页面，在onResult()方法中得到目标页面的结果数据。目标页面在处理结果后，调用setResult()方法设置具体的结果数据。</p>
+<p>3）事件广播</p>
+<p>事件广播是常用的组件间通信方案，资配平台为Page类也封装了send()、register()、unregister()等全局事件广播与监听方法。</p>
+<p>总的来说，当应用变得足够复杂，事件通信机制维护成本会比较高，全局事件本质上也是一种依赖耦合。针对复杂web应用，事件通信方案不适合用于解决不同页面组件之间数据流动问题，对此，业界已有相应成熟的解决方案，比如Vuex（Redux的vue实现）、RxJS等，</p>
+<h4 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h4><p>资配平台的路由方法由框架内置，具体由App类封装实现，继而体现在Page类的goto()、close()等方法上。<br>路由的一个重要特性是体现页面视图与浏览器URL地址的映射，资配平台默认实现采用了简单的映射方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">页面URL = /&#123;页面名称&#125;?&#123;页面参数查询字符串&#125;</div></pre></td></tr></table></figure>
+<p>URL路由地址对于多Tab页框架系统不适用，比如资配平台的页面跳转/切换，不会影响到浏览器历史记录；<br>路由只体现在一级页面，二级子页面的跳转/切换不影响到路由地址，子页面视图状态与路由的映射，需要由父页面控制。比如容器页面默认显示哪个Tab子页面，可由容器页面的页面参数指定，同时反应到页面url地址中；</p>
+<p>单页路由的实现思路：<a href="http://web.jobbole.com/88424/" target="_blank" rel="external">《理解浏览器历史记录》</a></p>
+<h4 id="问题和解决办法"><a href="#问题和解决办法" class="headerlink" title="问题和解决办法"></a>问题和解决办法</h4><p>在资配平台下 Vue 组件封装的另外一个问题：项目未迁移到es6 + webpack开发构建方式前，组件的html模板内容需要在js文件中拼凑，众所周知，在js中拼凑一大片html字符串，不仅写法困难，丢失了html结构层次，难以阅读和维护。因此，我们封装了辅助的构建方法，来处理这类动态组件和复杂视图组件，以便在外部引用复杂的HTML结构。</p>
+<p>资配平台比较核心的功能就是生成报告书，即可以进行报告书的内容定制，预览最终生成的报告书，再到提供PDF下载，一开始的技术方案是前端提供用户填写的数据，在后端调用来生成报告书的 HTML，再通过iframe的方式插到视图中。<br>因为都是的静态HTML,这样做的缺点也比较明显就是报告书的每页会出现很多空白的情况，而且和前后端分离的模式也有点冲突。<br>改进后的方案是页面的预览和分割成多个页面（解决每页空白的情况）放在前端实现，后端再通过Python的方式来抓取整个HTML再转换成PDF。新方案大大减少了预览的时间，直接去掉了在后端生成HTML再返回的过程，提高了整体效率。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>经过这次重构的实践和踩坑，对Vue框架有了更深刻的认识，也积累了很多公共组件的开发经验。</p>
+</div></article></div></body></head></html>
