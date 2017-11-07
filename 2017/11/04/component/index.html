@@ -1,6 +1,11 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>组件化实践方案</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">组件化实践方案</h1><i class="icon-calendar"></i><span>2017.11.04</span></header><div class="content"><p>为什么要前端组件化？</p>
-<p>组件化开发是当前前端发展技术的趋势，主要是为了降低业务逻辑的复杂度，提高复用率。单个页面可能有上百行，甚至上千行的代码，这种情况下不说代码的维护，单是阅读起来也是比较费劲的。<br>这个时候，就需要利用组件化开发，拆分功能，封装组件，单独维护。</p>
-<p>一份真正成熟可靠的组件化方案，需要具备的能力。</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>组件化实践方案</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">组件化实践方案</h1><i class="icon-calendar"></i><span>2017.11.04</span></header><div class="content"><h2 id="前端组件化是什么？"><a href="#前端组件化是什么？" class="headerlink" title="前端组件化是什么？"></a>前端组件化是什么？</h2><ul>
+<li>页面上的每个 独立的 可视/可交互区域视为一个组件;</li>
+<li>每个组件对应一个工程目录，组件所需的各种资源都在这个目录下就近维护;</li>
+<li>每个组件相对独立，页面只不过是组件的容器，组件自由组合形成功能完整的界面;</li>
+<li>当不需要某个组件，或者想要替换组件时，可以整个目录删除/替换。</li>
+</ul>
+<h2 id="前端组件化的好处？"><a href="#前端组件化的好处？" class="headerlink" title="前端组件化的好处？"></a>前端组件化的好处？</h2><p>组件化开发是当前前端发展技术的趋势，主要是为了降低业务逻辑的复杂度，提高复用率。单个页面可能有上百行，甚至上千行的代码，这种情况下不说代码的维护，单是阅读起来也是比较费劲的。<br>这个时候，就需要利用组件化开发，拆分功能，封装组件，单独维护。</p>
+<h2 id="怎样设计一个组件"><a href="#怎样设计一个组件" class="headerlink" title="怎样设计一个组件"></a>怎样设计一个组件</h2><p>一份真正成熟可靠的组件化方案，需要具备的能力。</p>
 <ul>
 <li>“资源高内聚”—— 组件资源内部高内聚，组件资源由自身加载控制</li>
 <li>“作用域独立”—— 内部结构密封，不与全局或其他组件产生影响</li>
@@ -30,4 +35,8 @@
 <p>如果组件在渲染的时候报错，需要展示错误信息。React v16 中提供了 componentDidCatch 生命周期函数，Vue v2.5 中提供了 errorCaptured 的钩子函数。</p>
 <p>React 中提供了一些生命周期函数：componentWillMount，componentDidMount，componentWillReceiveProps，shouldComponentUpdate，componentWillUpdate，componentDidUpdate，render，componentWillUnmount，componentDidCatch(React v16)。</p>
 <p>Vue 中提供了一些生命周期函数：beforeCreate，created，beforeMount，mounted，beforeUpdate，updated，beforeDestroy，destroyed，errorCapture，errorCaptured(Vue v2.5)。</p>
-<h3 id="事件传递"><a href="#事件传递" class="headerlink" title="事件传递"></a>事件传递</h3></div></article></div></body></head></html>
+<h3 id="事件传递"><a href="#事件传递" class="headerlink" title="事件传递"></a>事件传递</h3><p>Vue 中传递事件很简单，只需要在子组件内使用 this.$emit(‘event1’) 即可向外传递一个事件 event1，在父组件调用该子组件时，只需要监听 event1 事件，并给出对应事件处理逻辑即可。</p>
+<p>而在 React 中，官方没有给出组件间的事件传递解决方案，这也是 React 中比较坑的一点。不过，还是可以使用其他方式来实现。</p>
+<p>React 中，父组件可以使用 props 向子组件传值，而子组件向父组件传值，需要在父组件内定义函数并通过属性传递给子组件，在子组件内通过调用该属性对应的函数，传入参数，传递给父组件内的函数，并在父组件的该函数中做逻辑的处理。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>对组件的理解不能停留在实现的形式上，还要统筹大局，坚持并持续优化，提升整个系统的优化。</p>
+</div></article></div></body></head></html>
