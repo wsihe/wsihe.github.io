@@ -1,3 +1,33 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>组件化实践方案</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">组件化实践方案</h1><i class="icon-calendar"></i><span>2017.11.04</span></header><div class="content"><p>一份真正成熟可靠的组件化方案，需要具备的能力。</p>
-<p>“资源高内聚”—— 组件资源内部高内聚，组件资源由自身加载控制<br>“作用域独立”—— 内部结构密封，不与全局或其他组件产生影响<br>“自定义标签”—— 定义组件的使用方式<br>“可相互组合”—— 组件正在强大的地方，组件间组装整合<br>“接口规范化”—— 组件接口有统一规范，或者是生命周期的管理</p>
-</div></article></div></body></head></html>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>组件化实践方案</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">组件化实践方案</h1><i class="icon-calendar"></i><span>2017.11.04</span></header><div class="content"><p>为什么要前端组件化？</p>
+<p>组件化开发是当前前端发展技术的趋势，主要是为了降低业务逻辑的复杂度，提高复用率。单个页面可能有上百行，甚至上千行的代码，这种情况下不说代码的维护，单是阅读起来也是比较费劲的。<br>这个时候，就需要利用组件化开发，拆分功能，封装组件，单独维护。</p>
+<p>一份真正成熟可靠的组件化方案，需要具备的能力。</p>
+<ul>
+<li>“资源高内聚”—— 组件资源内部高内聚，组件资源由自身加载控制</li>
+<li>“作用域独立”—— 内部结构密封，不与全局或其他组件产生影响</li>
+<li>“自定义标签”—— 定义组件的使用方式</li>
+<li>“可相互组合”—— 组件正在强大的地方，组件间组装整合</li>
+<li>“接口规范化”—— 组件接口有统一规范，或者是生命周期的管理</li>
+</ul>
+<h3 id="专一"><a href="#专一" class="headerlink" title="专一"></a>专一</h3><p>要想设计一个好的组件，组件也需要专一。</p>
+<p>设计组件要遵循一个原则：一个组件只专注做一件事，且把这件事做好。</p>
+<p>一个功能如果可以拆分成多个功能点，那就可以将每个功能点封装成一个组件，当然也不是组件的颗粒度越小越好，只要将一个组件内的功能和逻辑控制在一个可控的范围内即可。</p>
+<p>举个例子。页面上有一个 Table 列表和一个分页控件，就可以将 Table 封装为一个组件，分页控件 封装成一个组件，最后再把 Table组件 和 分页组件 封装成一个组件。Table 组件还可以再拆分成多个 table-column 组件，及展示逻辑等。</p>
+<h3 id="可配置性"><a href="#可配置性" class="headerlink" title="可配置性"></a>可配置性</h3><p>一个组件，要明确它的输入和输出分别是什么。</p>
+<p>组件除了要展示默认的内容，还需要做一些动态的适配，比如：一个组件内有一段文本，一个图片和一个按钮。那么字体的颜色、图片的规则、按钮的位置、按钮点击事件的处理逻辑等，都是可以做成可配置的。</p>
+<p>要做可配置性，最基本的方式是通过属性向组件传递配置的值，而在组件初始化的声明周期内，通过读取属性的值做出对应的显示修改。还有一些方法，通过调用组件暴露出来的函数，向函数传递有效的值；修改全局 CSS样式；向组件传递特定事件，并在组件内监听该事件来执行函数等。</p>
+<p>在做可配置性时，为了让组件更加健壮，保证组件接收到的是有效的属性、函数接收到的是有效的参数，需要做一些校验。</p>
+<p>一. 属性的值的校验</p>
+<p>对属性的值进行校验，一般要考虑以下几个方面。</p>
+<p>1.属性值的类型是否是有效的。如果某个属性要求传递一个数组，那么传递过来的值不是数组时，就要抛出异常，并给出对应的提示。</p>
+<p>2.属性是否是必填的。有的属性的值，是组件内不可缺少的时，就要是必填的，在组件初始化时要做是否传递的检查，如果没有传递，则需要抛出异常，并给出相应的提示。如果属性不是必填的，可以设定一个默认值，当属性没有被设置时，就使用默认值。</p>
+<p>得益于 React、Vue 内部实现的属性检查，且这些属性检查会在组件初始化阶段默认执行，你可以很容易的给组件设置属性的检查。React 中可以使用 React.PropTypes 进行类型检查设置，Vue 中只需要给组件设置 props 即可。</p>
+<p>二. 函数的参数的校验</p>
+<p>函数的参数校验，只要按照传统的方法进行校验即可。在函数内部顶部判断参数的值和类型，如果不满足要求，则抛出异常，并给出相应的提示。</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>一个组件，需要明确知道在生命周期的不同阶段做该做的事。</p>
+<p>初始化阶段，读取属性的值，如果需要做数据和逻辑处理的话，在这个阶段进行。</p>
+<p>属性值变化时，如果属性发生变化，且需要对变化后的数据进行处理的话，在这个阶段进行处理。</p>
+<p>组件销毁阶段，如果组件已经创建了一些可能会对系统产生一些副作用的东西，可以在这个阶段进行清除。比如 timeInterval、timeout 等。</p>
+<p>如果组件在渲染的时候报错，需要展示错误信息。React v16 中提供了 componentDidCatch 生命周期函数，Vue v2.5 中提供了 errorCaptured 的钩子函数。</p>
+<p>React 中提供了一些生命周期函数：componentWillMount，componentDidMount，componentWillReceiveProps，shouldComponentUpdate，componentWillUpdate，componentDidUpdate，render，componentWillUnmount，componentDidCatch(React v16)。</p>
+<p>Vue 中提供了一些生命周期函数：beforeCreate，created，beforeMount，mounted，beforeUpdate，updated，beforeDestroy，destroyed，errorCapture，errorCaptured(Vue v2.5)。</p>
+<h3 id="事件传递"><a href="#事件传递" class="headerlink" title="事件传递"></a>事件传递</h3></div></article></div></body></head></html>
