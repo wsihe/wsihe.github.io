@@ -1,2 +1,41 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>函数的防抖和节流</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">函数的防抖和节流</h1><i class="icon-calendar"></i><span>2017.11.07</span></header><div class="content"><p>项目中用到，挖个坑慢慢补</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>函数的防抖和节流</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">函数的防抖和节流</h1><i class="icon-calendar"></i><span>2017.11.07</span></header><div class="content"><h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>项目中存在这样的问题：<br>1.用户快速连续提交按钮，或在搜索框输入实时触发搜索，导致多次提交。<br>2.用户搜索查询时，第一次查询请求时间比较长，然后第二次请求可能比第一次返回先，导致查询结果和筛选不对应的情况。</p>
+<p>首先把问题抽象下，主要是以下三种情况：</p>
+<ul>
+<li><p>重复提交<br>单位时间内，多次请求，造成的后台重复录入现象</p>
+</li>
+<li><p>快速点击<br>单位时间内，快速点击，触发异步事件，照成数据与ui混乱的现象</p>
+</li>
+<li><p>高频事件<br>单位时间内，触发的各类事件，且响应速度低于请求，造成的卡顿或其他混乱现象</p>
+</li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>一般在项目中比较常见用的方式是：</p>
+<ol>
+<li>禁止按钮和外部变量锁定的方式<br>局限性：增加了复杂度，假设你的项目有多处提交的地方，那么就意味着你需要多处定义；恢复状态的代码很容易和不相干的代码混合在一起；</li>
+<li>每次点击都发请求，往回调里加闭包带唯一递增的id或随机数，每一次请求回调以后，看这个id或随机数是不是主函数体里最后一次的id或随机数，是则调用回调，不是则返回。<br>局限性：因为多次请求返回的都是最后一次的数据，这种方式解决了数据与ui混乱的情况，但是多次请求服务器的问题并没有解决。</li>
+<li>setTimeout + clearTimeout<br>连续的点击会把上一次点击清除掉，也就是只有请求会在最后一次点击后发出去</li>
+</ol>
+<h2 id="函数的防抖和节流"><a href="#函数的防抖和节流" class="headerlink" title="函数的防抖和节流"></a>函数的防抖和节流</h2><p>在这里主要说下第三种方式：函数的防抖(debounce)和节流(throttle)</p>
+<p>函数的防抖(debounce)</p>
+<blockquote>
+<p>某个函数在上一次执行后，满足等待某个时间内不再触发此函数后再执行，而在这个等待时间内再次触发此函数，等待时间会重新计算。</p>
+</blockquote>
+<p>函数节流（throttle</p>
+<blockquote>
+<p>每间隔某个时间去执行某函数，避免函数的过多执行。</p>
+</blockquote>
+<p>用外卖订餐来比喻函数的防抖和节流，简单的说就是：</p>
+<blockquote>
+<p>函数的防抖：在一家店订餐，假设店里把餐品准备好要花费的时间为10分钟，而这个时间内你又有增加下单，那外卖小哥又会重新等10分钟才能出发。<br>函数节流：每次下单，外卖小哥都是在间隔10分钟后给你送到。和函数的防抖区别在于，在这十分钟内无论你下多少单，外卖小哥也不会等待，只给你送一次下的单。</p>
+</blockquote>
+<p>1.函数防抖（debounce）</p>
+<p>简单的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function debounce(func,delay)&#123;</div><div class="line">    var timer = null;</div><div class="line">    return function()&#123;</div><div class="line">        clearTimeout(timer);     //如果方法多次触发，则把上次记录的延迟执行代码清掉，重新开始</div><div class="line">        timer = setTimeout(function()&#123;</div><div class="line">            func();</div><div class="line">        &#125;,delay);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>按上面订餐的情况分析，假设一直下单，用简单的实现方式，那不是一直没饭吃。<br>改进下，我们不希望非要等到事件停止触发后才执行，希望立刻执行函数，然后等到停止接受触发， n 秒后才可以重新触发执行。<br>可以这里增加一个参数来设置是否要立即执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function debouce(func,delay,immediate)&#123;</div><div class="line">    var timer = null;</div><div class="line">    return function()&#123;</div><div class="line">        var context = this;</div><div class="line">        var args = arguments;</div><div class="line">        if(timer) clearTimeout(timer);</div><div class="line">        if(immediate)&#123;</div><div class="line">            var canDo = !timer;</div><div class="line">            timer = setTimeout(function()&#123;   //每一次都重新设置timer，保证delay后才可以新触发执行</div><div class="line">                timer = null;</div><div class="line">            &#125;,delay);</div><div class="line">            if(canDo)&#123;</div><div class="line">              func.apply(context,args);</div><div class="line">            &#125;</div><div class="line">        &#125;else&#123;</div><div class="line">            timer = setTimeout(function()&#123;</div><div class="line">                func.apply(context,args);</div><div class="line">            &#125;,delay);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.函数节流（throttle）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">function throttle(func, delay) &#123;</div><div class="line"></div><div class="line">  var timer,</div><div class="line">      firstTime = true;</div><div class="line"></div><div class="line">  return function() &#123;</div><div class="line">    var args = arguments,</div><div class="line">        context = this;</div><div class="line"></div><div class="line">    if(firstTime) &#123;                  //如果是第一次调用，不用延迟执行</div><div class="line">      func.apply(context, args);</div><div class="line">      return firstTime = false;</div><div class="line">    &#125;</div><div class="line">    if(timer) &#123;                      //如果定时器还在，说明上一次延迟执行还没有完成</div><div class="line">      return false;</div><div class="line">    &#125;</div><div class="line">    timer = setTimeout(function() &#123;  //延迟一段时间执行</div><div class="line">      clearTimeout(timer);</div><div class="line">      timer = null;</div><div class="line">      func.apply(context, args);</div><div class="line">    &#125;, delay || 500)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看到这里可以看出，改进后的防抖其实就是节流。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>防止一个事件频繁触发回调函数的方式：</p>
+<p>防抖：将几次操作合并为一此操作进行。<br>原理是维护一个计时器，规定在delay时间后触发函数，但是在delay时间内再次触发的话，就会取消之前的计时器而重新设置。这样一来，只有最后一次操作能被触发。</p>
+<p>节流：每间隔某个时间去执行某函数。<br>原理是通过判断是否到达一定时间来触发函数，若没到规定时间则使用计时器延后，而下一次事件则会重新设定计时器。</p>
+<p>节流和防抖动最大的区别就是，节流函数不管事件触发有多频繁，都会保证在规定时间内一定会执行一次真正的事件处理函数，而防抖动只是在最后一次事件后才触发一次函数。</p>
 </div></article></div></body></head></html>
