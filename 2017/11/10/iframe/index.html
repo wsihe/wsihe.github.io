@@ -1,2 +1,16 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>iframe 页面之间的通信</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">iframe 页面之间的通信</h1><i class="icon-calendar"></i><span>2017.11.10</span></header><div class="content"><p>挖坑，复习下 iframe 页面之间的通信相关的知识点</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>iframe 页面之间的通信</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">iframe 页面之间的通信</h1><i class="icon-calendar"></i><span>2017.11.10</span></header><div class="content"><p>iframe框架中的页面与主页面之间的通信方式根据iframe中src属性是同域链接还是跨域链接，有明显不同的通信方式，同域下的数据交换和DOM元素互访就简单的多了，而跨域的则需要一些巧妙的方式来实现通信。</p>
+<h2 id="一、同域下父子页面的通信"><a href="#一、同域下父子页面的通信" class="headerlink" title="一、同域下父子页面的通信"></a>一、同域下父子页面的通信</h2><p>方法调用</p>
+<p>父页面调用子页面的方法可通过：FrameName.window.childMethod();(这种方式兼容各种浏览器)<br>子页面调用父页面的方法：parent.window.parentMethod();</p>
+<p>DOM元素访问</p>
+<p>根据FrameName.window得到了子窗口对象之后，再访问其中的DOM元素就跟访问同一页面中的DOM元素没区别了都可以通过document.getElementById(),document.getElementsByName()[index]。如：parent.window.document.getElementsByName(“myFrame”)[0],myFrame.window.document.getElementById(“button”)其中的window都是可以省略的。</p>
+<p>注意事项</p>
+<p>要确保在Iframe加载完成后再进行操作，如果Iframe还未加载完成就开始调用里面的方法或变量，无疑会产生错误。判断Iframe是否加载完毕有两种方法：<br>1.在Iframe上用onload事件;<br>2.用document.readyState==”complete”来判断</p>
+<h2 id="二、跨域父子页面通信方法"><a href="#二、跨域父子页面通信方法" class="headerlink" title="二、跨域父子页面通信方法"></a>二、跨域父子页面通信方法</h2><p>父页面向子页面传递数据</p>
+<p>实现的技巧就是利用 location 对象的 hash 值，通过它传递通信数据，我们只需要在父页面设置 iframe的 src 后面多加个#data 字符串（data就是你要传递的数据），然后在 子页面 中通过某种方式能即时的获取到这儿 data 就可以了，其实常用的一种方式就是：</p>
+<ol>
+<li>在 子页面 中通过 setInterval 方法设置定时器， 监听 location.href 的变化即可获得上面的 data 信息</li>
+<li>然后 子页面 就能根据这个 data 信息进行相应的逻辑处理。</li>
+</ol>
+<p>子页面向父页面传递数据</p>
+<p>实现的技巧就是利用一个代理 Iframe C，它嵌入到 子页面中，并且和父页面必须保持是同域，然后我们通过它充分利用上面第一种通信方式的实现原理就能把 子页面的数据传递给 iframeC，接下来的问题就是怎么让iframeC把数据传递给主页面A ，因为，iframeC 和主页面是同域的，所以它们之间传递数据就变得简单多了，属于同域名下的通信问题了，如前面所讨论的，在这里的可以使用一个经常使用的属性 window.top (也可以使用window.parent.parent)，它返回对载入浏览器得最顶层 window 对象的引用，这样我们就能直接条用父页面中方法啦。</p>
 </div></article></div></body></head></html>
