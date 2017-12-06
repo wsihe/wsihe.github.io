@@ -81,7 +81,7 @@
 </code></pre></li>
 </ul>
 <p>前面学习了vue-cli的一些相关的知识，下面开始正式对项目进行一些扩展</p>
-<p>1.我们可以使用预处理器来构建简洁和功能更丰富的组件，例如stylus，pug语法，我们需要再“加工”一下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ cd asset2</div><div class="line"># 安装stylus，pug</div><div class="line"># 模块名将被添加到devDependencies</div><div class="line">$ npm i pug stylus stylus-loader -D</div></pre></td></tr></table></figure></p>
+<p>1.我们可以使用预处理器来构建简洁和功能更丰富的组件，例如stylus，pug语法，我们需要再“加工”一下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd asset2</span><br><span class="line"># 安装stylus，pug</span><br><span class="line"># 模块名将被添加到devDependencies</span><br><span class="line">$ npm i pug stylus stylus-loader -D</span><br></pre></td></tr></table></figure></p>
 <p>  效果</p>
 <pre><code>&lt;template lang=&quot;pug&quot;&gt;
   .page
@@ -91,7 +91,7 @@
   .page
     display block
 &lt;/style&gt;
-</code></pre><p>  <a href="http://html2jade.org/" target="_blank" rel="external">html在线转换jade</a></p>
+</code></pre><p>  <a href="http://html2jade.org/" target="_blank" rel="noopener">html在线转换jade</a></p>
 <p>  如果编译的过程出现 Pug 报错：Invalid indentation,you can use tabs or spaces but not both问题，可以按如下方法解决</p>
 <ul>
 <li>在webstorm中设置方法如下：preference-&gt;Code Style-&gt;jade-&gt;Tabs and Indents-&gt;勾选Use Tab charactor</li>
