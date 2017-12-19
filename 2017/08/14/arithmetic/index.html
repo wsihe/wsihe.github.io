@@ -2,18 +2,25 @@
 <a id="more"></a>
 <h2 id="1-去掉一组整型数组重复的值"><a href="#1-去掉一组整型数组重复的值" class="headerlink" title="1.去掉一组整型数组重复的值"></a>1.去掉一组整型数组重复的值</h2><pre><code>var student = [‘qiang’,’ming’,’tao’,’li’,’liang’,’you’,’qiang’,’tao’];
 </code></pre><p>对Object的使用，利用key来进行筛选</p>
-<pre><code>let unique = function(arr) {
-    let hashTable = {};
-    let data = [];
-    for(let i=0,l=arr.length;i&lt;l;i++) {
-        if(!hashTable[arr[i]]) {
-            hashTable[arr[i]] = true;
-            data.push(arr[i]);
+<pre><code>    let unique = function(arr) {
+        let hashTable = {};
+        let data = [];
+        for(let i=0,l=arr.length;i&lt;l;i++) {
+            if(!hashTable[arr[i]]) {
+                hashTable[arr[i]] = true;
+                data.push(arr[i]);
+            }
         }
+        return data
     }
-    return data
-}
-module.exports = unique;
+    module.exports = unique;
+
+
+    var result = arr.filter(function (item, index, array) {
+   //保留返回True的项的值。如果item第一次在数组中出现，其索引和index相等；如果是重复出现的，则不相等。
+   return array.indexOf(item) === index;
+});
+return result;
 </code></pre><h2 id="2-统计一个字符串出现最多的字母"><a href="#2-统计一个字符串出现最多的字母" class="headerlink" title="2.统计一个字符串出现最多的字母"></a>2.统计一个字符串出现最多的字母</h2><p>给出一段英文连续的英文字符窜，找出重复出现次数最多的字母</p>
 <pre><code>输入 ： afjghdfraaaasdenas
  输出 ： a
