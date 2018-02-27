@@ -1,3 +1,34 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>webpack 4迁移实践</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">webpack 4迁移实践</h1><i class="icon-calendar"></i><span>2018.02.27</span></header><div class="content"><p>经历 5 个月的开发周期之后， webpack 4.0-beta 在 2018年1月 已经 Released 了，webpack 团队不仅兑现了之前的承诺，新版本还带来了诸多新特性，在用户使用的体验上也作了诸多改进。</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Webpack 4 尝鲜迁移</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Webpack 4 尝鲜迁移</h1><i class="icon-calendar"></i><span>2018.02.27</span></header><div class="content"><p>webpack 团队在 2018年2月24号 发布 webpack 4 稳定版，不仅兑现了之前的承诺，新版本还带来了诸多新特性，在用户使用的体验上也作了诸多改进。</p>
 <a id="more"></a>
-<h2 id="变化-改进"><a href="#变化-改进" class="headerlink" title="变化/改进"></a>变化/改进</h2><h2 id="webpack-3-gt-webpack-4"><a href="#webpack-3-gt-webpack-4" class="headerlink" title="webpack 3 =&gt; webpack 4"></a>webpack 3 =&gt; webpack 4</h2></div></article></div></body></head></html>
+<h2 id="变化-改进"><a href="#变化-改进" class="headerlink" title="变化/改进"></a>变化/改进</h2><p>下面是一些更值得注意的功能。若想了解更新，功能和内部 API 修改的完整的清单，请查看 webpack 4 <a href="https://github.com/webpack/webpack/releases/tag/v4.0.0-beta.0" target="_blank" rel="noopener">修改日志</a></p>
+<h4 id="更好的性能"><a href="#更好的性能" class="headerlink" title="更好的性能"></a>更好的性能</h4><p>在 webpack 4 的多个场景中，性能将显着增强：</p>
+<ul>
+<li>默认情况下，在使用 production 模式时，我们会使用 UglifyJS 自动并行编译和缓存来减少工作量 。</li>
+<li>新版的插件系统以便事件钩子和处理函数是单一形态的。</li>
+<li>webpack 现已放弃对 Node v4 的支持，能够添加大量的新型 ES6 语法和数据结构，并且也通过 V8 进行了优化</li>
+</ul>
+<h4 id="更好的默认配置-——-零配置"><a href="#更好的默认配置-——-零配置" class="headerlink" title="更好的默认配置 —— 零配置"></a>更好的默认配置 —— 零配置</h4><ul>
+<li>默认设置 entry 和 output 属性</li>
+</ul>
+<h4 id="更好的默认模式-——-mode"><a href="#更好的默认模式-——-mode" class="headerlink" title="更好的默认模式 —— mode"></a>更好的默认模式 —— mode</h4><p>两种模式之间选择 (mode 或 –mode)：production 或 development</p>
+<ul>
+<li>生产模式可以为你提供各种优化。这包含代码压缩，作用域提升，未引用模块移除，无副作用模块修剪，还包含引入一些像 NoEmitOnErrorsPlugin 这样需要手动使用的插件。</li>
+<li>开发模式优化了开发速度和开发体验。自动在包输出中包含像路径名，eval-source-maps 这样的功能，以便阅读代码和快速构建！</li>
+</ul>
+<h4 id="sideEffects-设置-——-在打包体积上巨大的胜利"><a href="#sideEffects-设置-——-在打包体积上巨大的胜利" class="headerlink" title="sideEffects 设置 —— 在打包体积上巨大的胜利"></a>sideEffects 设置 —— 在打包体积上巨大的胜利</h4><p>在 package.json 中引入了对 sideEffects: false 的支持。当这个字段被添加时，它向 webpack 发出信号，表示被使用的库没有副作用。这意味着 webpack 可以安全地清除你代码中使用的任何重复导出模块。</p>
+<h4 id="支持-JSON-和-Tree-Shaking"><a href="#支持-JSON-和-Tree-Shaking" class="headerlink" title="支持 JSON 和 Tree Shaking"></a>支持 JSON 和 Tree Shaking</h4><p>当使用 ESModule 语法 import JSON 时，webpack 4 会消除 “JSON Module” 中未使用的导出。对于那些已经将大量未使用模块的 JSON 导入到代码的应用，打包体积明显减小。</p>
+<h4 id="模块类型的引入-支持-mjs"><a href="#模块类型的引入-支持-mjs" class="headerlink" title="模块类型的引入 + 支持 .mjs"></a>模块类型的引入 + 支持 .mjs</h4><p>历史上，JavaScript 是 webpack 中唯一的一流模块类型，不能高效的打包 CSS/HTML。</p>
+<p>目前建成，现在有5个模块类型实现引入：</p>
+<ul>
+<li>javascript/auto: (在 webpack 3 默认启用) 启用了所有的 Javascript 模块系统：CommonJS，AMD，ESM</li>
+<li>javascript/esm: EcmaScript 模块，所有的其他模块系统不可用（默认 .mjs 文件）</li>
+<li>javascript/dynamic: 只有 CommonJS 和，EcmaScript 模块不可用</li>
+<li>json: JSON 数据，它可以通过 require 和 import 来引入使用（默认 .json 的文件）</li>
+<li>webassembly/experimental: WebAssembly模块（当前为 .wasm 文件的实验文件和默认文件）</li>
+<li>webpack 4 支持查找 .wasm, .mjs, .js 和 .json 拓展文件来解析</li>
+</ul>
+<h4 id="去除-CommonsChunkPlugin"><a href="#去除-CommonsChunkPlugin" class="headerlink" title="去除 CommonsChunkPlugin"></a>去除 CommonsChunkPlugin</h4><ul>
+<li>删除了 CommonsChunkPlugin，并默认启用了它的许多功能。</li>
+<li>对于需要对其缓存策略进行细粒度控制，webpack 4 已经添加了 optimization.splitChunks 和 optimization.runtimeChunk 它们具有更丰富，更灵活的功能</li>
+</ul>
+<h2 id="webpack-3-gt-webpack-4"><a href="#webpack-3-gt-webpack-4" class="headerlink" title="webpack 3 =&gt; webpack 4"></a>webpack 3 =&gt; webpack 4</h2></div></article></div></body></head></html>
