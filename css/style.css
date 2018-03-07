@@ -663,37 +663,39 @@ div.home h1 {
   margin-left: 110px;
   color: #41b883;
 }
-.excerpts .pagination {
+.pagination {
+  width: 100%;
+  margin: 0 auto;
   padding-bottom: 1.2em;
 }
-.excerpts .pagination:before,
-.excerpts .pagination:after {
+.pagination:before,
+.pagination:after {
   content: " ";
   display: table;
 }
-.excerpts .pagination:after {
+.pagination:after {
   clear: both;
 }
-.excerpts .pagination .prev,
-.excerpts .pagination .next {
+.pagination .prev,
+.pagination .next {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;
   font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
   transition-property: transform;
   transition-timing-function: ease-out;
   transition-duration: 0.3s;
 }
-.excerpts .pagination .prev {
+.pagination .prev {
   float: left;
 }
-.excerpts .pagination .prev:hover {
+.pagination .prev:hover {
   color: #41b883;
   transform: translateX(-4px);
 }
-.excerpts .pagination .next {
+.pagination .next {
   float: right;
 }
-.excerpts .pagination .next:hover {
+.pagination .next:hover {
   color: #41b883;
   transform: translateX(4px);
 }
@@ -844,9 +846,14 @@ code {
   font-size: 13px;
   padding: 1px 6px;
 }
+.archive .pagination {
+  padding-top: 5px;
+  border-top: 1px solid #f1f1f1;
+}
 .box {
   width: 100%;
-  top: 60px;
+  margin-top: 60px;
+  margin-bottom: 20px;
   position: relative;
 }
 .box:before {
