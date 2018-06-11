@@ -664,40 +664,42 @@ div.home h1 {
   color: #41b883;
 }
 .pagination {
-  width: 100%;
-  margin: 0 auto;
-  padding-bottom: 1.2em;
+  text-align: center;
+  margin-top: 30px;
 }
-.pagination:before,
-.pagination:after {
-  content: " ";
-  display: table;
+.pagination .page-number {
+  width: 22px;
+  height: 22px;
+  background: #4d4d4d;
+  display: inline-block;
+  color: #fff;
+  line-height: 22px;
+  font-size: 12px;
+  margin: 0 5px 30px;
+  border-radius: 2px;
 }
-.pagination:after {
-  clear: both;
+.pagination .page-number:hover {
+  background: #41b883;
 }
-.pagination .prev,
-.pagination .next {
-  font-weight: 400;
-  font-size: 20px;
-  font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
-  transition-property: transform;
-  transition-timing-function: ease-out;
-  transition-duration: 0.3s;
+.pagination .current {
+  background: #41b883;
+  cursor: default;
 }
-.pagination .prev {
-  float: left;
+.pagination .current:hover {
+  background: #41b883;
 }
-.pagination .prev:hover {
+.pagination .extend {
+  position: relative;
+  top: 2px;
+  color: #4d4d4d;
+  margin: 0 27px;
+  opacity: 1;
+}
+.pagination .extend:hover {
   color: #41b883;
-  transform: translateX(-4px);
 }
-.pagination .next {
-  float: right;
-}
-.pagination .next:hover {
-  color: #41b883;
-  transform: translateX(4px);
+.pagination:hover .extend {
+  opacity: 1;
 }
 .container {
   padding-top: 20px;
