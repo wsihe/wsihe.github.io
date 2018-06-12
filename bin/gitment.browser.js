@@ -1,43 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>Axios 前端实现登录配置</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">Axios 前端实现登录配置</h1><i class="icon-calendar"></i><span>2017.05.27</span></header><div class="content"><p>鉴于在半年前尤大就不推荐使用vue-resource作为vue的官方ajax库，推荐使用axios，在项目中，我们通过使用 axios拦截器和router路由拦截来实现简单的登录拦截功能。<br><a id="more"></a></p>
-<h3 id="1-路由拦截"><a href="#1-路由拦截" class="headerlink" title="1.路由拦截"></a>1.路由拦截</h3><p>定义路由时，在meta中添加requireAuth，用于判断是否要登陆，主体框架内的路由访问都是要登陆的，即index.vue一级路由下的子路由都要登陆，所以我们的设置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const router = new Router(&#123;</span><br><span class="line">  mode: &apos;history&apos;,</span><br><span class="line">  routes:</span><br><span class="line">  [&#123;</span><br><span class="line">    path: &apos;/&apos;,</span><br><span class="line">    component: index,   // 主页面一级路由</span><br><span class="line">    children: []</span><br><span class="line">  &#125;,</span><br><span class="line">  // 登陆注册页</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;/login&apos;,</span><br><span class="line">    component: login,</span><br><span class="line">    meta: &#123;</span><br><span class="line">      requireAuth: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>接着根据 vue-router 提供的导航钩子来拦截导航，让它完成跳转或取消<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach((to, from, next) =&gt; &#123;</span><br><span class="line">  if (to.meta.requireAuth !== 0) &#123;  // 判断该路由是否需要登录权限</span><br><span class="line">    if (store.state.token) &#123;</span><br><span class="line">      next()</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      next(&#123;</span><br><span class="line">        path: &apos;/login&apos;,</span><br><span class="line">        query: &#123;redirect: to.fullPath&#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    next()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>每个钩子方法接收三个参数：</p>
-<ul>
-<li><p>to: Route: 即将要进入的目标 路由对象</p>
-</li>
-<li><p>from: Route: 当前导航正要离开的路由</p>
-</li>
-<li><p>next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。</p>
-<ul>
-<li><p>next(): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed （确认的）。</p>
-</li>
-<li><p>next(false): 中断当前的导航。如果浏览器的 URL 改变了（可能是用户手动或者浏览器后退按钮），那么 URL 地址会重置到 from 路由对应的地址。</p>
-</li>
-<li><p>next(‘/‘) 或者 next({ path: ‘/‘ }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>确保要调用 next 方法，否则钩子就不会被 resolved。</p>
-<p>当to.meta.requireAuth 等于0的时候，该路由不用登陆，否则再判断是否存token，当存在token才进入index.vue下的子路由，这里涉及到vuex状态管理将在下一章中说到。</p>
-<p>路由拦截只是简单的前端控制，并不能真正阻止用户访问需要登录权限的路由，还有种情况就是当本地token失效了，但是本地的token依然存在，这个时候再访问后端接口会报未授权 (Unauthorized)，应该是提示用户重新登陆，所以还要用到axios拦截器</p>
-<h3 id="2-axios拦截器"><a href="#2-axios拦截器" class="headerlink" title="2.axios拦截器"></a>2.axios拦截器</h3><p>在这里利用拦截器做预处理</p>
-<ul>
-<li><p>请求时的拦截器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use((config) =&gt; &#123;</span><br><span class="line">  if (config.method === &apos;post&apos; || config.method === &apos;put&apos;) &#123;</span><br><span class="line">    config.data = qs.stringify(config.data)</span><br><span class="line">  &#125;</span><br><span class="line">  if (store.state.token) &#123;</span><br><span class="line">    config.headers.Authorization = `token $&#123;store.state.token&#125;`</span><br><span class="line">  &#125;</span><br><span class="line">  return config</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  return Promise.reject(error)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>请求完成后的拦截器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.response.use((response) =&gt; &#123;</span><br><span class="line">  if (response.status &gt;= 200 &amp;&amp; response.status &lt; 300) &#123;</span><br><span class="line">    return response</span><br><span class="line">  &#125;</span><br><span class="line">  return Promise.reject(response)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  let err = formatError(error)</span><br><span class="line">  if (err.status === 401) &#123;</span><br><span class="line">    store.commit(RECORD_LOGOUT)</span><br><span class="line">    router.replace(&#123;</span><br><span class="line">      path: &apos;login&apos;,</span><br><span class="line">      query: &#123;redirect: router.currentRoute.fullPath&#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  return Promise.reject(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>通过路由拦截和axios拦截器就实现了基本的登陆功能，登出功能只要清除token就可以实现</p>
-<p>更多axios用法可以查看：<br><a href="https://github.com/mzabriskie/axios" target="_blank" rel="noopener">Axios 官方文档</a></p>
-<h3 id="系列链接"><a href="#系列链接" class="headerlink" title="系列链接"></a>系列链接</h3><ul>
-<li><a href="/2017/05/31/Vue2-8/" title="组件通信 (vuex)">组件通信 (vuex)</a></li>
-<li><a href="/2017/06/03/Vue2-9/" title="Vue2.0多页签应用 - 页签管理">Vue2.0多页签应用 - 页签管理</a>
-</li>
-</ul>
-</div></article><div id="comments"></div><link rel="stylesheet" href="/css/default.css"><script>var Gitment =
+var Gitment =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -3787,12 +3748,4 @@ var spinner = exports.spinner = '<svg class="gitment-spinner-icon" xmlns="http:/
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=gitment.browser.js.map</script><script>var gitment = new Gitment({
-  owner: 'wsihe',
-  repo: 'wsihe.github.io',
-  oauth: {
-    client_id: '61c99bf8d78723342c02',
-    client_secret: '9ed056f7e96c27abc7d8587af5acd8c05148942a',
-  },
-})
-gitment.render('comments')</script></div></body></head></html>
+//# sourceMappingURL=gitment.browser.js.map
