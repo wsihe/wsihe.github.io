@@ -1,7 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="keywords" content="river,前端,设计,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><title>前端测试框架 Jest 实践</title><body><div class="container"><div class="nav"><ul><li class="item"><a href="/">主页</a></li><li class="item"><a href="/archives">归档</a></li><li class="item"><a href="/about/">关于</a></li></ul></div><article><header><h1 class="title">前端测试框架 Jest 实践</h1><i class="icon-calendar"></i><span>2018.06.21</span></header><div class="content"><p>最近，项目使用前端测试框架 Jest，配套使用 Vue-test-util，接下来以下是我对 Jest 实践的总结，分享给大家。</p>
 <a id="more"></a>
-<p>###关于 Vue-test-util 和 Jest</p>
-<ul>
+<h3 id="关于-Vue-test-util-和-Jest"><a href="#关于-Vue-test-util-和-Jest" class="headerlink" title="关于 Vue-test-util 和 Jest"></a>关于 Vue-test-util 和 Jest</h3><ul>
 <li><p>Vue-test-utils 是 Vue 的官方的单元测试框架，它提供了一系列非常方便的工具，使我们更加轻松的为Vue构建的应用来编写单元测试。</p>
 </li>
 <li><p>Jest 是 Facebook 出品的一个测试框架，相对其他测试框架，其一大特点就是就是内置了常用的测试工具，比如自带断言、测试覆盖率工具，实现了开箱即用。</p>
@@ -9,6 +8,27 @@
 <li><p>Vue-test-utils 在 Vue 和 Jest 之前提供了一个桥梁，暴露出一些接口，让我们更加方便的通过 Jest 为 Vue 应用编写单元测试。</p>
 </li>
 </ul>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>首先要安装Jest和Vue Test Utils：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev jest @vue/test-utils</span><br></pre></td></tr></table></figure>
+<p>为了告诉Jest如何处理*.vue文件，需要安装和配置vue-jest预处理器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev vue-jest</span><br></pre></td></tr></table></figure>
+<p>jest.conf.js配置文件配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  moduleFileExtensions: [&apos;js&apos;, &apos;json&apos;, &apos;vue&apos;],</span><br><span class="line">  moduleNameMapper: &#123;</span><br><span class="line">    &apos;^@/(.*)$&apos;: &apos;&lt;rootDir&gt;/src/$1&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  transform: &#123;</span><br><span class="line">    &apos;^.+\\.js$&apos;: &apos;&lt;rootDir&gt;/node_modules/babel-jest&apos;,</span><br><span class="line">    &apos;.*\\.(vue)$&apos;: &apos;&lt;rootDir&gt;/node_modules/vue-jest&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置好了之后，就可以开始编写单元测试了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; mount &#125; from &apos;@vue/test-utils&apos;</span><br><span class="line">import Component from &apos;./component&apos;</span><br><span class="line"></span><br><span class="line">describe(&apos;Component&apos;, () =&gt; &#123;</span><br><span class="line">  test(&apos;是一个 Vue 实例&apos;, () =&gt; &#123;</span><br><span class="line">    const wrapper = mount(Component)</span><br><span class="line">    expect(wrapper.isVueInstance()).toBeTruthy()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>mount等方法来挂载组件，后面会说到。</p>
+<p>启用测试的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run jest</span><br></pre></td></tr></table></figure>
+<p>更详细的配置，可以参考<a href="https://vue-test-utils.vuejs.org/zh/" target="_blank" rel="noopener">官方文档</a></p>
+<h3 id="测试目标"><a href="#测试目标" class="headerlink" title="测试目标"></a>测试目标</h3><ul>
+<li>测试DOM结构</li>
+<li>测试样式</li>
+<li>测试Props</li>
+<li>测试自定义事件</li>
+<li>测试计算属性</li>
+<li>测试监听器</li>
+<li>测试方法</li>
+</ul>
+<p>… 未完待续</p>
 </div></article><div id="comments"></div><link rel="stylesheet" href="/css/default.css"><script>var Gitment =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
