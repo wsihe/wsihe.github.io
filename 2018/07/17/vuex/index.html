@@ -14,12 +14,12 @@
 </ol>
 <h4 id="mutation"><a href="#mutation" class="headerlink" title="mutation"></a>mutation</h4><p>第二个参数mutation ，它是一个个函数，用来修改 state 里面的数据，有几点规范:</p>
 <ol>
-<li>命名以全大写 和 ‘_’ 的组合方式，第一个单词为 SET 或者 GET，后续的为 state 里的</li>
+<li>命名以全大写 和 ‘_’ 的组合方式，第一个单词为 SET 或者 GET</li>
 <li>一般而言 get 请求的数据，设置一次不再改变的数据，采用 GET，其余采用 SET</li>
 <li>尽可能一个函数对应一个状态</li>
 <li>不要在函数内部处理复杂的逻辑，不修改源数据，只做赋值操作</li>
 </ol>
-<h4 id="action"><a href="#action" class="headerlink" title="action"></a>action</h4><p>想要一次性修改多个状态，或者异步请求存在继发关系时，就需要用到 action ，同样有几点原则</p>
+<h4 id="action"><a href="#action" class="headerlink" title="action"></a>action</h4><p>想要一次性修改多个状态，或者异步请求存在继发关系时，就需要用到 action :</p>
 <ol>
 <li>只从后台获取数据，而不做修改的用 get 方式，否则用 post</li>
 <li>get 请求的函数命名形式统一才用 get + state 中的状态，post 尽量采用动词开头</li>
@@ -29,9 +29,13 @@
 <h4 id="getter"><a href="#getter" class="headerlink" title="getter"></a>getter</h4><p>不应该在 muations 的函数做复杂逻辑，因为这个操作应该交给 getters，不仅如此，所有数据都应该由它‘过滤’一遍，我们在组件中取数据，都应当从这里面取</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。</span><br></pre></td></tr></table></figure>
 <h4 id="module"><a href="#module" class="headerlink" title="module"></a>module</h4><p>Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter，在项目中我们也是使用这种模式。</p>
-<h4 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h4><p>4 个辅助函数只用 mapGetters 的原因是，引入mapMuations 或者 mapActions，当 methods 函数调用比较复杂而且很多时，不易理解。</p>
-<p>始终采用this.$store.dispatch 和 this.$store.commit 能一目了然的知道哪些函数是异步，可以用接 then，哪些函数是会修改到 Vuex 里面的状态，哪些函数只是当前组件特有，也是为了提高团队合作时，方便同事快速理解你的代码。</p>
-<p>不用 mapState 是因为本身我所以的状态，都是经过 getters 处理过的，也不用担心误操作，不经过 muations 直接修改 state 里面的值导致报错</p>
+<h4 id="其他建议"><a href="#其他建议" class="headerlink" title="其他建议"></a>其他建议</h4><ol>
+<li><p>4 个辅助函数只用 mapGetters</p>
+<p> 引入mapMuations 或者 mapActions，当 methods 函数调用比较复杂而且很多时，不易理解。</p>
+<p> 另外采用this.$store.dispatch 和 this.$store.commit 能一目了然的知道哪些函数是异步，可以用接 then，哪些函数是会修改到 Vuex 里面的状态，哪些函数只是当前组件特有，也是为了提高团队合作时，方便同事快速理解你的代码。</p>
+<p> 不用 mapState 是因为本身我所以的状态，都是经过 getters 处理过的，也不用担心误操作，不经过 muations 直接修改 state 里面的值导致报错</p>
+</li>
+</ol>
 </div></article><div id="comments"></div><link rel="stylesheet" href="/css/default.css"><script>var Gitment =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
